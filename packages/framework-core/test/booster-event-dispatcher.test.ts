@@ -147,8 +147,8 @@ describe('BoosterEventDispatcher', () => {
           readModelStore
         )
 
-        expect(eventStore.calculateAndStoreEntitySnapshot).to.have.been.called
-        expect(eventStore.calculateAndStoreEntitySnapshot).to.have.been.calledOnceWith(
+        expect(eventStore.fetchEntitySnapshot).to.have.been.called
+        expect(eventStore.fetchEntitySnapshot).to.have.been.calledOnceWith(
           someEvent.entityTypeName,
           someEvent.entityID,
           [someEvent]
@@ -158,7 +158,7 @@ describe('BoosterEventDispatcher', () => {
       it('projects the entity state to the corresponding read models', async () => {
         const boosterEventDispatcher = BoosterEventDispatcher as any
         const eventStore = createStubInstance(EventStore)
-        eventStore.calculateAndStoreEntitySnapshot = fake.resolves(someEntitySnapshot) as any
+        eventStore.fetchEntitySnapshot = fake.resolves(someEntitySnapshot) as any
 
         const readModelStore = createStubInstance(ReadModelStore)
 
@@ -170,6 +170,7 @@ describe('BoosterEventDispatcher', () => {
           eventStore,
           readModelStore
         )
+        expect(eventStore.storeSnapshot).to.have.been.calledWith(someEntitySnapshot)
         expect(readModelStore.project).to.have.been.calledOnce
         expect(readModelStore.project).to.have.been.calledWith(someEntitySnapshot)
       })
