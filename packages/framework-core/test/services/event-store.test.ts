@@ -393,14 +393,11 @@ describe('EventStore', () => {
         })
       })
     })
-  })
-
-  describe('private methods', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const eventStore = new EventStore(config) as any
 
     describe('storeSnapshot', () => {
       it('stores a snapshot in the event store', async () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const eventStore = new EventStore(config) as any
         replace(config.provider.events, 'store', fake())
 
         const someSnapshot = snapshotEnvelopeFor({
@@ -413,6 +410,11 @@ describe('EventStore', () => {
         expect(config.provider.events.store).to.have.been.calledOnceWith([someSnapshot], config)
       })
     })
+  })
+
+  describe('private methods', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const eventStore = new EventStore(config) as any
 
     describe('loadLatestSnapshot', () => {
       it('looks for the latest snapshot stored in the event stream', async () => {
@@ -431,7 +433,7 @@ describe('EventStore', () => {
     })
 
     describe('loadEventStreamSince', () => {
-      it('loads a event stream starting from a specific timestapm', async () => {
+      it('loads a event stream starting from a specific timestamp', async () => {
         replace(config.provider.events, 'forEntitySince', fake())
 
         const entityTypeName = AnEntity.name
