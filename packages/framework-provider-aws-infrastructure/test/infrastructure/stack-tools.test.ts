@@ -117,7 +117,7 @@ describe('the `stack-tools` module', () => {
       config.appName = 'testing-app'
       config.readModels[SomeReadModel.name] = {
         class: SomeReadModel,
-        authorizedRoles: 'all',
+        authorizer: BoosterAuthorizer.allowAccess,
         properties: [],
         before: [],
       }

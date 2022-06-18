@@ -3,6 +3,7 @@ import { expect } from '../../expect'
 import { describe } from 'mocha'
 import { Stack, App } from '@aws-cdk/core'
 import { BoosterConfig, UUID } from '@boostercloud/framework-types'
+import { BoosterAuthorizer } from '@boostercloud/framework-core'
 
 import { ReadModelsStack } from '../../../src/infrastructure/stacks/read-models-stack'
 import { Table } from '@aws-cdk/aws-dynamodb'
@@ -17,7 +18,7 @@ describe('ReadModelsStack', () => {
       config.userProjectRootPath = '.'
       config.readModels['SomeReadModel'] = {
         class: SomeReadModel,
-        authorizedRoles: 'all',
+        authorizer: BoosterAuthorizer.allowAccess,
         properties: [],
         before: [],
       }
@@ -47,7 +48,7 @@ describe('ReadModelsStack', () => {
       config.userProjectRootPath = '.'
       config.readModels['SomeReadModel'] = {
         class: SomeReadModel,
-        authorizedRoles: 'all',
+        authorizer: BoosterAuthorizer.allowAccess,
         properties: [],
         before: [],
       }

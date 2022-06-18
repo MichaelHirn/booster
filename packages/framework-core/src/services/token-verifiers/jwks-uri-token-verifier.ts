@@ -12,7 +12,7 @@ export const JWT_ENV_VARS = {
   BOOSTER_ROLES_CLAIM: 'BOOSTER_ROLES_CLAIM',
 }
 
-export class JwskUriTokenVerifier implements TokenVerifier {
+export class JwksUriTokenVerifier implements TokenVerifier {
   public constructor(readonly issuer: string, readonly jwksUri: string, readonly rolesClaim?: string) {}
 
   public async verify(token: string): Promise<UserEnvelope> {

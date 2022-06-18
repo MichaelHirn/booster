@@ -12,6 +12,7 @@ import {
 import { replace, fake, stub, restore } from 'sinon'
 import { EventStore } from '../../src/services/event-store'
 import { expect } from '../expect'
+import { BoosterAuthorizer } from '../../src/booster-authorizer'
 
 describe('EventStore', () => {
   afterEach(() => {
@@ -63,7 +64,7 @@ describe('EventStore', () => {
       forEntitySince: () => {},
     },
   } as any as ProviderLibrary
-  config.entities[AnEntity.name] = { class: AnEntity, authorizeReadEvents: [] }
+  config.entities[AnEntity.name] = { class: AnEntity, authorizer: BoosterAuthorizer.authorizeRoles.bind(null, []) }
   config.reducers[AnEvent.name] = {
     class: AnEntity,
     methodName: 'reducerThatCallsEntityMethod',
@@ -137,6 +138,7 @@ describe('EventStore', () => {
         replace(eventStore, 'loadLatestSnapshot', fake.resolves(null))
         replace(eventStore, 'loadEventStreamSince', fake.resolves([someEventEnvelope]))
         replace(eventStore, 'entityReducer', function () {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           expect(this).to.be.equal(eventStore)
         })

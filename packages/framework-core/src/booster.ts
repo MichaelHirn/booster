@@ -22,7 +22,7 @@ import { BoosterSubscribersNotifier } from './booster-subscribers-notifier'
 import { Importer } from './importer'
 import { EventStore } from './services/event-store'
 import { BoosterRocketDispatcher } from './booster-rocket-dispatcher'
-import { JwskUriTokenVerifier, JWT_ENV_VARS } from './services/token-verifiers'
+import { JwksUriTokenVerifier, JWT_ENV_VARS } from './services/token-verifiers'
 
 /**
  * Main class to interact with Booster and configure it.
@@ -181,7 +181,7 @@ export class Booster {
           " Please set your application's `config.tokenVerifiers` options explicitly in your `src/config/config.ts` file."
       )
       this.config.tokenVerifiers.push(
-        new JwskUriTokenVerifier(BOOSTER_JWT_ISSUER, BOOSTER_JWKS_URI, BOOSTER_ROLES_CLAIM)
+        new JwksUriTokenVerifier(BOOSTER_JWT_ISSUER, BOOSTER_JWKS_URI, BOOSTER_ROLES_CLAIM)
       )
     }
   }
